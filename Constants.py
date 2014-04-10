@@ -1,0 +1,2 @@
+MAP_HEIGHT = 9
+MAP_WIDTH = 9
