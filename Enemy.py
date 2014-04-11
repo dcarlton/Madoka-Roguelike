@@ -1,5 +1,4 @@
 from Character import Character
-import libtcodpy as libtcod
 import sys
 import random
 from Constants import *
@@ -15,7 +14,10 @@ class Enemy(Character):
 		self.y = int(MAP_HEIGHT / 2)
 		self.strength = being.strength
 		self.block = BlockStatus.BLOCK_ALL
-		self.character = being.character
+		self.image = being.image
+		self.rect = being.rect
+		self.rect.x = self.x * 16
+		self.rect.y = self.y * 16
 		self.being = being
 		self.beingType = being.beingType
 		self.being.controller = self
@@ -81,15 +83,8 @@ class Enemy(Character):
 	def die(self):
 		if self.hp <= 0:
 			if self.beingType == BeingType.WALPURGISNACHT:
-				libtcod.console_clear(0)
-				libtcod.console_print(0, 0, int(MAP_HEIGHT / 2), "You win!")
-				libtcod.console_flush()
-				while (True):
-					key = libtcod.Key()
-					mouse = libtcod.Mouse()
-					libtcod.sys_wait_for_event(libtcod.EVENT_KEY_PRESS, key, mouse, True)
-					if key.vk == libtcod.KEY_ESCAPE:
-						sys.exit(0)
+				print("You win!")
+				sys.exit(0)
 			(board.grid[self.x][self.y]).removeBeing(self)
 			self.x = -1
 			self.y = -1

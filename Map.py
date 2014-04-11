@@ -1,11 +1,7 @@
-import libtcodpy as libtcod
+import pygame
 from Cell import Cell
 from Constants import *
 from Enumerations import *
-
-gameScreen = libtcod.console_new(MAP_WIDTH, MAP_HEIGHT)
-libtcod.console_set_default_background(gameScreen, libtcod.white)
-libtcod.console_set_default_foreground(gameScreen, libtcod.black)
 
 class Map:
 	instance = None
@@ -30,8 +26,9 @@ class Map:
 				(self.grid[x]).append(Cell(x, y))
 				
 	def draw(self):
+		screen = pygame.display.get_surface()
+		screen.fill((255, 255, 255))
 		for column in self.grid:
 			for cell in column:
-				cell.draw(gameScreen)
-		libtcod.console_blit(gameScreen, 0, 0, MAP_WIDTH, MAP_HEIGHT, 0, 0, 0)
-		libtcod.console_flush()
+				cell.draw()
+		pygame.display.flip()

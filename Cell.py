@@ -1,4 +1,4 @@
-import libtcodpy as libtcod
+import pygame
 from Enumerations import *
 
 class Cell:
@@ -8,12 +8,12 @@ class Cell:
 		self.x = x
 		self.y = y
 		
-	def draw(self, console):
-		libtcod.console_set_char_background(console, self.x, self.y, libtcod.white)
-		if len(self.beings) == 0:
-			libtcod.console_put_char(console, self.x, self.y, ' ')
-			return
-		libtcod.console_put_char(console, self.x, self.y, (self.beings[-1]).character)
+	def draw(self):
+		if len(self.beings) != 0:
+			screen = pygame.display.get_surface()
+			self.beings[-1].rect.x = self.beings[-1].x * 16
+			self.beings[-1].rect.y = self.beings[-1].y * 16
+			screen.blit(self.beings[-1].image, self.beings[-1].rect)
 		
 	def addBeing(self, being):
 		if self.canMove(being):

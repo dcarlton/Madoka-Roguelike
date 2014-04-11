@@ -1,6 +1,6 @@
-import libtcodpy as libtcod
 import random
 import sys
+import pygame
 from PlayState import PlayState
 from Player import Player
 from Enemy import Enemy
@@ -12,11 +12,9 @@ from Map import Map
 from TurnManager import TurnManager
 from Constants import *
 from Enumerations import *
+pygame.init()
 
-
-libtcod.console_set_custom_font('arial24x24.png', libtcod.FONT_TYPE_GREYSCALE | libtcod.FONT_LAYOUT_TCOD)
-libtcod.console_init_root(MAP_WIDTH, MAP_HEIGHT, 'Madoka Roguelike', False)
-
+screen = pygame.display.set_mode((144, 144))
 player = Player(Mami())
 player.x = 4
 player.y = 4
@@ -30,7 +28,9 @@ for witch in witches:
 		y = random.randint(0, MAP_HEIGHT - 1)
 		if board.grid[x][y].addBeing(witch):
 			witch.x = x
+			witch.rect.x = x * 16
 			witch.y = y
+			witch.rect.y = y * 16
 			break
 			
 turnManager = TurnManager.getInstance()
@@ -52,7 +52,9 @@ def addWitch():
 		y = random.randint(0, MAP_HEIGHT - 1)
 		if board.grid[x][y].addBeing(witch):
 			witch.x = x
+			witch.rect.x = x * 16
 			witch.y = y
+			witch.rect.y = y * 16
 			break
 	witches.append(witch)
 	turnManager.delayFunction(addWitch, 25)
@@ -64,41 +66,29 @@ def addWalpurgisnacht():
 		y = random.randint(0, MAP_HEIGHT - 1)
 		if board.grid[x][y].addBeing(walpurgisnacht):
 			walpurgisnacht.x = x
+			walpurgisnacht.rect.x = x * 16
 			walpurgisnacht.y = y
+			walpurgisnacht.rect.y = y * 16
 			break
 	witches.insert(0, walpurgisnacht)
 		
 def win():
 	# Would be nice if there was a way to check if Walpurgisnaght had been slain
-	libtcod.console_clear(0)
-	libtcod.console_print(0, 0, int(MAP_HEIGHT / 2), "You win!")
-	libtcod.console_flush()
-	while (True):
-		key = libtcod.Key()
-		mouse = libtcod.Mouse()
-		libtcod.sys_wait_for_event(libtcod.EVENT_KEY_PRESS, key, mouse, True)
-		if key.vk == libtcod.KEY_ESCAPE:
-			sys.exit(0)
+	print("You win!")
+	sys.exit(0)
 			
 def loss():
 	if player.hp <= 0 or player.magic <= 0:
 		result = "Game over"
 	else:
 		return False
-	libtcod.console_clear(0)
-	libtcod.console_print(0, 0, int(MAP_HEIGHT / 2), result)
-	libtcod.console_flush()
-	while (True):
-		key = libtcod.Key()
-		mouse = libtcod.Mouse()
-		libtcod.sys_wait_for_event(libtcod.EVENT_KEY_PRESS, key, mouse, True)
-		if key.vk == libtcod.KEY_ESCAPE:
-			sys.exit(0)
+	print("Game over")
+	sys.exit(0)
 
 turnManager.delayFunction(addWitch, 25)
 turnManager.delayFunction(addWalpurgisnacht, 50)
 
-while not libtcod.console_is_window_closed():
+while True:
 	board.draw()
 	while (not player.takeTurn()):
 		pass

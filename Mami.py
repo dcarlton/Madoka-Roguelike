@@ -1,3 +1,4 @@
+import pygame
 from Enumerations import *
 from Constants import *
 from Map import Map
@@ -13,7 +14,8 @@ class Mami(MagicalGirl):
 		self.hp = 100000
 		self.magic = 100
 		self.regenerationRate = 5
-		self.character = 'M'
+		self.image = pygame.image.load("MamiStanding.png").convert()
+		self.rect = self.image.get_rect()
 		self.controller = 0
 		self.beingType = BeingType.MAGICAL_GIRL
 		

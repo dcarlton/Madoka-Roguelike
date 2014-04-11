@@ -1,3 +1,4 @@
+import pygame
 import random
 from Familiar import Familiar
 from Enemy import Enemy
@@ -20,7 +21,9 @@ class Witch(Familiar):
 			y = random.randint(0, MAP_HEIGHT - 1)
 			if board.grid[x][y].addBeing(familiar):
 				familiar.x = x
+				familiar.rect.x = x * 16
 				familiar.y = y
+				familiar.rect.y = y * 16
 				break
 		if delay:
 			turnManager.delayFunction(self.spawnFamiliar, 10)
@@ -28,7 +31,8 @@ class Witch(Familiar):
 	def __init__(self):
 		self.hp = 75
 		self.strength = 20
-		self.character = 'W'
+		self.image = pygame.image.load("WitchStanding.png").convert()
+		self.rect = self.image.get_rect()
 		self.beingType = BeingType.WITCH
 		self.block = BlockStatus.BLOCK_ALL
 		self.controller = 0

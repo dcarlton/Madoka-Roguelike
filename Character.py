@@ -1,4 +1,3 @@
-import libtcodpy as libtcod
 import sys
 from Constants import *
 from Enumerations import *
@@ -28,6 +27,7 @@ class Character:
 				(board.grid[self.x][self.y]).removeBeing(self)
 				self.y += 1
 				(board.grid[self.x][self.y]).addBeing(self)
+				self.rect.move(0, 16)
 				return True
 			return False
 		elif direction == Movement.MOVE_UP and self.y > 0 and self.y < MAP_HEIGHT:
@@ -35,6 +35,7 @@ class Character:
 				(board.grid[self.x][self.y]).removeBeing(self)
 				self.y -= 1
 				(board.grid[self.x][self.y]).addBeing(self)
+				self.rect.move(0, -16)
 				return True
 			return False
 		elif direction == Movement.MOVE_LEFT and self.x > 0 and self.x < MAP_WIDTH:
@@ -42,6 +43,7 @@ class Character:
 				(board.grid[self.x][self.y]).removeBeing(self)
 				self.x -= 1
 				(board.grid[self.x][self.y]).addBeing(self)
+				self.rect.move(-16, 0)
 				return True
 			return False
 		elif direction == Movement.MOVE_RIGHT and self.x > -1 and self.x < (MAP_WIDTH - 1):
@@ -49,6 +51,7 @@ class Character:
 				(board.grid[self.x][self.y]).removeBeing(self)
 				self.x += 1
 				(board.grid[self.x][self.y]).addBeing(self)
+				self.rect.move(16, 0)
 				return True
 			return False
 		return False
