@@ -1,36 +1,40 @@
 class TurnManager():
-	instance = None
-	
-	def __init__(self):
-		# Singleton
-		return
-		
-	@classmethod
-	def getInstance(cls):
-		if cls.instance is None:
-			cls.instance = TurnManager()
-			(cls.instance).construct()
-		return cls.instance
+    instance = None
 
-	def construct(self):
-		self.toBeCalled = dict()
-		self.turnCount = 1
-		
-	def delayFunction(self, function, delay):
-		if (self.toBeCalled).has_key(self.turnCount + delay):
-			self.toBeCalled[(self.turnCount + delay)].append(function)
-		else:
-			self.toBeCalled[self.turnCount + delay] = [function]
-			
-	def removeDelayedFunction(self, function, delay):
-		for turn in range(self.turnCount, self.turnCount + delay):
-			if (self.toBeCalled).has_key(turn):
-				result = self.toBeCalled[turn].remove(function)
-				if result:
-					return True
-		return False
+    def __init__(self):
+        # Singleton
+        return
 
-	def callDelayedFunctions(self):
-		if self.toBeCalled.has_key(self.turnCount):
-			for function in self.toBeCalled[self.turnCount]:
-				function()
+    @classmethod
+    def getInstance(cls):
+        if cls.instance is None:
+            cls.instance = TurnManager()
+            (cls.instance).construct()
+        return cls.instance
+
+    def construct(self):
+        self.toBeCalled = dict()
+        self.turnCount = 1
+
+    def callDelayedFunctions(self):
+        if self.toBeCalled.has_key(self.turnCount):
+            for function in self.toBeCalled[self.turnCount]:
+                function()
+
+    def delayFunction(self, function, delay):
+        if (self.toBeCalled).has_key(self.turnCount + delay):
+            self.toBeCalled[(self.turnCount + delay)].append(function)
+        else:
+            self.toBeCalled[self.turnCount + delay] = [function]
+
+    def endTurn(self):
+        self.turnCount += 1
+        self.callDelayedFunctions()
+
+    def removeDelayedFunction(self, function, delay):
+        for turn in range(self.turnCount, self.turnCount + delay):
+            if (self.toBeCalled).has_key(turn):
+                result = self.toBeCalled[turn].remove(function)
+                if result:
+                    return True
+        return False
