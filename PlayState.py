@@ -1,13 +1,13 @@
 import pygame
 import sys
-from Enemy import Enemy
+from Enemy import makeEnemy
 from Enumerations import *
 from Event import Event
 from Familiar import Familiar
 from Mami import Mami
 from Map import Map
 from Mixer import Mixer
-from Player import Player
+from Player import makePlayer
 from State import State
 from TurnManager import TurnManager
 from Walpurgisnacht import Walpurgisnacht
@@ -19,12 +19,12 @@ turnManager = TurnManager.getInstance()
 
 class PlayState(State):
     def addFamiliar(self):
-        familiar = Enemy(Familiar())
+        familiar = makeEnemy(Familiar)
         board.addCharacter(familiar)
         self.familiars.append(familiar)
 
     def addWitch(self):
-        witch = Enemy(Witch())
+        witch = makeEnemy(Witch)
         board.addCharacter(witch)
         self.witches.append(witch)
 
@@ -33,13 +33,13 @@ class PlayState(State):
         turnManager.delayFunction(self.addWitch, 25)
 
     def addWalpurgisnacht(self):
-        self.walpurgisnacht = Enemy(Walpurgisnacht())
+        self.walpurgisnacht = makeEnemy(Walpurgisnacht)
         board.addCharacter(self.walpurgisnacht)
         for i in range(0, 4):
             self.addFamiliar()
 
     def __init__(self):
-        self.player = Player(Mami())
+        self.player = makePlayer(Mami)
         board.addCharacter(self.player)
 
         self.familiars = []

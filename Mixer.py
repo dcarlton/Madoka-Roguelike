@@ -22,4 +22,4 @@ class Mixer():
         if self.primary:
             self.primary.stop()
         self.primary = pygame.mixer.Sound(filename)
-        self.primary.play()
+        self.primary.play(-1)

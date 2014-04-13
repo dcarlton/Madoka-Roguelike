@@ -18,12 +18,10 @@ class Walpurgisnacht(Witch):
         self.rect = self.image.get_rect()
         self.beingType = BeingType.WALPURGISNACHT
         self.block = BlockStatus.BLOCK_ALL
-        self.controller = 0
 
     def die(self):
-        print("Game over!")
         if self.hp <= 0:
             (board.grid[self.x][self.y]).removeBeing(self)
             self.x = -1
             self.y = -1
-        Event.winEvent()
+            Event.winEvent()
