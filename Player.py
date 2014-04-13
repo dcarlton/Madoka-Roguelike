@@ -1,6 +1,6 @@
-from Character import Character
 import pygame
 import sys
+from Character import Character
 from Constants import *
 from Enumerations import *
 from Event import Event
@@ -52,24 +52,36 @@ class Player(Character):
             magicLoss = self.being.abilityOne(self.x, self.y-1)
             if magicLoss != 0:
                 self.magic -= magicLoss
+                if self.magic <= 0:
+                    Event.lossEvent()
                 return True
             return self.move(Movement.MOVE_UP)
+
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
             magicLoss = self.being.abilityOne(self.x, self.y+1)
             if magicLoss != 0:
                 self.magic -= magicLoss
+                if self.magic <= 0:
+                    Event.lossEvent()
                 return True
             return self.move(Movement.MOVE_DOWN)
+
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
             magicLoss = self.being.abilityOne(self.x-1, self.y)
             if magicLoss != 0:
                 self.magic -= magicLoss
+                if self.magic <= 0:
+                    Event.lossEvent()
                 return True
             return self.move(Movement.MOVE_LEFT)
+
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
             magicLoss = self.being.abilityOne(self.x+1, self.y)
             if magicLoss != 0:
                 self.magic -= magicLoss
+                if self.magic <= 0:
+                    Event.lossEvent()
                 return True
             return self.move(Movement.MOVE_RIGHT)
+
         return False

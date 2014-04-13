@@ -6,6 +6,7 @@ from Event import Event
 from Familiar import Familiar
 from Mami import Mami
 from Map import Map
+from Mixer import Mixer
 from Player import Player
 from State import State
 from TurnManager import TurnManager
@@ -13,6 +14,7 @@ from Walpurgisnacht import Walpurgisnacht
 from Witch import Witch
 
 board = Map.getInstance()
+mixer = Mixer.getInstance()
 turnManager = TurnManager.getInstance()
 
 class PlayState(State):
@@ -45,6 +47,8 @@ class PlayState(State):
         self.walpurgisnacht = False
         self.addWitch()
         turnManager.delayFunction(self.addWalpurgisnacht, 1)
+
+        mixer.playSong("Magia.wav")
 
         board.draw()
 
