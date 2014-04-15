@@ -108,6 +108,9 @@ def makePlayer(being):
                 self.targetX = self.x
                 self.targetY = self.y
                 return False
+
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_y:
+                return True
             return False
 
         def takeTurnTargeting(self, event):
