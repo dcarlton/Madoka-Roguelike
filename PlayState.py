@@ -4,6 +4,7 @@ from Enemy import makeEnemy
 from Enumerations import *
 from Event import Event
 from Familiar import Familiar
+from Graphics import Graphics
 from Mami import Mami
 from Map import Map
 from Mixer import Mixer
@@ -50,8 +51,6 @@ class PlayState(State):
 
         mixer.playSong("Magia.wav")
 
-        board.draw()
-
     def eventHandle(self, event):
         if event == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
             sys.exit(0)
@@ -66,10 +65,12 @@ class PlayState(State):
         if self.player.takeTurn(event):
             self.npcTurn()
             turnManager.endTurn()
-        board.draw()
         print("HP: " + str(self.player.hp))
         print("Magic: " + str(self.player.magic))
         print("Score: " + str(self.player.score))
+
+    def draw(self):
+        Graphics.getInstance().drawPlayState(self.player)
 
     def npcTurn(self):
         if self.walpurgisnacht:

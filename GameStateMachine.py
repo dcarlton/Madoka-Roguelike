@@ -17,5 +17,6 @@ class GameStateMachine():
         pygame.event.set_blocked(pygame.MOUSEBUTTONUP)
         pygame.event.set_blocked(pygame.KEYUP)
         while True:
+            self.currentState.draw()
             event = pygame.event.wait()
             self.currentState.eventHandle(event)

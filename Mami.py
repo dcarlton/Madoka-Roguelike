@@ -6,9 +6,6 @@ from MagicalGirl import MagicalGirl
 from Map import Map
 from TurnManager import TurnManager
 
-MUSKET_SLAM_DAMAGE = 10
-MUSKET_SLAM_MAGIC = 5
-
 board = Map.getInstance()
 turnManager = TurnManager.getInstance()
 
@@ -25,13 +22,24 @@ class Mami(MagicalGirl):
         self.rect = self.image.get_rect()
         self.beingType = BeingType.MAGICAL_GIRL
         self.score = 0
+
+        self.abilityOneName = "Musket Slam"
+        self.abilityOneDamage = 10
+        self.abilityOneMagic = 5
+        self.abilityOneRange = 1
+        self.abilityOneStatus = None
+
         turnManager.delayFunction(self.regenerate, self.regenerationRate)
 
     def abilityOne(self, x, y):
         if not (-1 < x and x < MAP_WIDTH and -1 < y and y < MAP_HEIGHT):
             return 0
+        if self.distance(self.x, self.y, x, y) > self.abilityOneRange:
+            return 0
         if len((board.grid[x][y]).beings) > 0:
-            ((board.grid[x][y]).beings[-1]).hp -= MUSKET_SLAM_DAMAGE
+            if board.grid[x][y].beings[-1] == self:
+                return 0
+            ((board.grid[x][y]).beings[-1]).hp -= self.abilityOneDamage
             if ((board.grid[x][y]).beings[-1]).hp <= 0:
                 dead = (board.grid[x][y]).beings[-1]
                 if dead.beingType == BeingType.FAMILIAR:
@@ -40,7 +48,7 @@ class Mami(MagicalGirl):
                     self.score += 100
                     self.magic += 200
                 ((board.grid[x][y]).beings[-1]).die()
-            return MUSKET_SLAM_MAGIC
+            return self.abilityOneMagic
         return 0
 
     def regenerate(self):

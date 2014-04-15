@@ -34,11 +34,3 @@ class Map:
                 character.x = x
                 character.y = y
                 return
-
-    def draw(self):
-        screen = pygame.display.get_surface()
-        screen.fill((255, 255, 255))
-        for column in self.grid:
-            for cell in column:
-                cell.draw()
-        pygame.display.flip()

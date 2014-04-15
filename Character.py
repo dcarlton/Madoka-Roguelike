@@ -1,3 +1,4 @@
+import math
 import sys
 from Constants import *
 from Enumerations import *
@@ -12,6 +13,9 @@ class Character:
         if self.beingType == other.beingType and self.x == other.x and self.y == other.y:
             return True
         return False
+
+    def distance(self, x1, y1, x2, y2):
+        return math.fabs(x1 - x2) + math.fabs(y1 - y2)
 
     def move(self, direction):
         if direction == Movement.MOVE_DOWN and self.y > -1 and self.y < (MAP_HEIGHT - 1):
