@@ -29,29 +29,18 @@ class Mami(MagicalGirl):
         self.abilityOneRange = 1
         self.abilityOneStatus = None
 
+        self.abilityTwoName = "Musket Shot"
+        self.abilityTwoDamage = 15
+        self.abilityTwoMagic = 10
+        self.abilityTwoRange = 3
+        self.abilityTwoStatus = None
+
+        self.abilityThreeName = "Trio Finale"
+        self.abilityThreeDamage = 45
+        self.abilityThreeMagic = 25
+        self.abilityThreeRange = 3
+        self.abilityThreeStatus = None
+
         turnManager.delayFunction(self.regenerate, self.regenerationRate)
 
-    def abilityOne(self, x, y):
-        if not (-1 < x and x < MAP_WIDTH and -1 < y and y < MAP_HEIGHT):
-            return 0
-        if self.distance(self.x, self.y, x, y) > self.abilityOneRange:
-            return 0
-        if len((board.grid[x][y]).beings) > 0:
-            if board.grid[x][y].beings[-1] == self:
-                return 0
-            ((board.grid[x][y]).beings[-1]).hp -= self.abilityOneDamage
-            if ((board.grid[x][y]).beings[-1]).hp <= 0:
-                dead = (board.grid[x][y]).beings[-1]
-                if dead.beingType == BeingType.FAMILIAR:
-                    self.score += 100
-                elif dead.beingType == BeingType.WITCH:
-                    self.score += 100
-                    self.magic += 200
-                ((board.grid[x][y]).beings[-1]).die()
-            return self.abilityOneMagic
-        return 0
-
-    def regenerate(self):
-        if self.hp < self.maxHP:
-            self.hp += 1
-        turnManager.delayFunction(self.regenerate, self.regenerationRate)
+    # Using the default MagicalGirl class for abilities 1-3

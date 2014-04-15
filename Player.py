@@ -116,22 +116,22 @@ def makePlayer(being):
         def takeTurnTargeting(self, event):
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
-                    if self.targetY > 0 and self.distance(self.x, self.y, self.targetX, self.targetY - 1) <= self.abilityOneRange:
+                    if self.targetY > 0 and self.distance(self.x, self.y, self.targetX, self.targetY - 1) <= self.getRange(self.targeting):
                         self.targetY -= 1
                     return False
 
                 elif event.key == pygame.K_DOWN:
-                    if self.targetY < (MAP_HEIGHT - 1) and self.distance(self.x, self.y, self.targetX, self.targetY + 1) <= self.abilityOneRange:
+                    if self.targetY < (MAP_HEIGHT - 1) and self.distance(self.x, self.y, self.targetX, self.targetY + 1) <= self.getRange(self.targeting):
                         self.targetY += 1
                     return False
 
                 elif event.key == pygame.K_LEFT:
-                    if self.targetX > 0 and self.distance(self.x, self.y, self.targetX - 1, self.targetY) <= self.abilityOneRange:
+                    if self.targetX > 0 and self.distance(self.x, self.y, self.targetX - 1, self.targetY) <= self.getRange(self.targeting):
                         self.targetX -= 1
                     return False
 
                 elif event.key == pygame.K_RIGHT:
-                    if self.targetX < (MAP_WIDTH - 1) and self.distance(self.x, self.y, self.targetX + 1, self.targetY) <= self.abilityOneRange:
+                    if self.targetX < (MAP_WIDTH - 1) and self.distance(self.x, self.y, self.targetX + 1, self.targetY) <= self.getRange(self.targeting):
                         self.targetX += 1
                     return False
 
