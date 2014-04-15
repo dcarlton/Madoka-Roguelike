@@ -8,20 +8,20 @@ board = Map.getInstance()
 turnManager = TurnManager.getInstance()
 
 class MagicalGirl(Being):
-    # All of the MagicalGirl subclasses are basically used as structs
-    # They maintain the player/allies initial stats and abilities
     def __init__(self):
-        pass
+        super(MagicalGirl, self).__init__()
 
     def abilityOne(self, x, y):
         if not (-1 < x and x < MAP_WIDTH and -1 < y and y < MAP_HEIGHT):
-            return 0
+            return None
         if self.distance(self.x, self.y, x, y) > self.abilityOneRange:
-            return 0
+            return None
         if len((board.grid[x][y]).beings) > 0:
             if board.grid[x][y].beings[-1] == self:
-                return 0
+                return None
             ((board.grid[x][y]).beings[-1]).hp -= self.abilityOneDamage
+            if self.abilityOneStatus is not None:
+                ((board.grid[x][y]).beings[-1]).status.append(self.abilityOneStatus)
             if ((board.grid[x][y]).beings[-1]).hp <= 0:
                 dead = (board.grid[x][y]).beings[-1]
                 if dead.beingType == BeingType.FAMILIAR:
@@ -31,17 +31,19 @@ class MagicalGirl(Being):
                     self.magic += 200
                 ((board.grid[x][y]).beings[-1]).die()
             return self.abilityOneMagic
-        return 0
+        return None
 
     def abilityTwo(self, x, y):
         if not (-1 < x and x < MAP_WIDTH and -1 < y and y < MAP_HEIGHT):
-            return 0
+            return None
         if self.distance(self.x, self.y, x, y) > self.abilityTwoRange:
-            return 0
+            return None
         if len((board.grid[x][y]).beings) > 0:
             if board.grid[x][y].beings[-1] == self:
-                return 0
+                return None
             ((board.grid[x][y]).beings[-1]).hp -= self.abilityTwoDamage
+            if self.abilityTwoStatus is not None:
+                ((board.grid[x][y]).beings[-1]).status.append(self.abilityTwoStatus)
             if ((board.grid[x][y]).beings[-1]).hp <= 0:
                 dead = (board.grid[x][y]).beings[-1]
                 if dead.beingType == BeingType.FAMILIAR:
@@ -51,17 +53,19 @@ class MagicalGirl(Being):
                     self.magic += 200
                 ((board.grid[x][y]).beings[-1]).die()
             return self.abilityTwoMagic
-        return 0
+        return None
 
     def abilityThree(self, x, y):
         if not (-1 < x and x < MAP_WIDTH and -1 < y and y < MAP_HEIGHT):
-            return 0
+            return None
         if self.distance(self.x, self.y, x, y) > self.abilityThreeRange:
-            return 0
+            return None
         if len((board.grid[x][y]).beings) > 0:
             if board.grid[x][y].beings[-1] == self:
-                return 0
+                return None
             ((board.grid[x][y]).beings[-1]).hp -= self.abilityThreeDamage
+            if self.abilityThreeStatus is not None:
+                ((board.grid[x][y]).beings[-1]).status.append(self.abilityThreeStatus)
             if ((board.grid[x][y]).beings[-1]).hp <= 0:
                 dead = (board.grid[x][y]).beings[-1]
                 if dead.beingType == BeingType.FAMILIAR:
@@ -71,7 +75,29 @@ class MagicalGirl(Being):
                     self.magic += 200
                 ((board.grid[x][y]).beings[-1]).die()
             return self.abilityThreeMagic
-        return 0
+        return None
+
+    def abilityFour(self, x, y):
+        if not (-1 < x and x < MAP_WIDTH and -1 < y and y < MAP_HEIGHT):
+            return None
+        if self.distance(self.x, self.y, x, y) > self.abilityFourRange:
+            return None
+        if len((board.grid[x][y]).beings) > 0:
+            if board.grid[x][y].beings[-1] == self:
+                return None
+            ((board.grid[x][y]).beings[-1]).hp -= self.abilityFourDamage
+            if self.abilityFourStatus is not None:
+                ((board.grid[x][y]).beings[-1]).status.append(self.abilityFourStatus)
+            if ((board.grid[x][y]).beings[-1]).hp <= 0:
+                dead = (board.grid[x][y]).beings[-1]
+                if dead.beingType == BeingType.FAMILIAR:
+                    self.score += 100
+                elif dead.beingType == BeingType.WITCH:
+                    self.score += 100
+                    self.magic += 200
+                ((board.grid[x][y]).beings[-1]).die()
+            return self.abilityFourMagic
+        return None
 
     def getRange(self, ability):
         if ability == 1:

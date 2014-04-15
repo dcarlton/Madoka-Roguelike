@@ -1,10 +1,10 @@
-from Familiar import Familiar
+from Being import Being
 from Enumerations import *
 from Graphics import Graphics
-from TurnManager import TurnManager
 
-class Witch(Familiar):
+class Witch(Being):
     def __init__(self):
+        super(Witch, self).__init__()
         self.maxHP = 75
         self.hp = self.maxHP
         self.strength = 20

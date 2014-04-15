@@ -32,3 +32,6 @@ class Images:
     WITCH_STANDING = 2000
     WALPURGISNACHT_STANDING = 3000
     TARGET_CURSOR = 4000
+
+class Status:
+    STUN = 1

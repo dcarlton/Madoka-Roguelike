@@ -5,6 +5,7 @@ from Graphics import Graphics
 
 class Familiar(Being):
     def __init__(self):
+        super(Familiar, self).__init__()
         self.maxHP = 25
         self.hp = self.maxHP
         self.x = 0

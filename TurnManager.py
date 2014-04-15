@@ -31,10 +31,15 @@ class TurnManager():
         self.turnCount += 1
         self.callDelayedFunctions()
 
-    def removeDelayedFunction(self, function, delay):
+    def removeDelayedFunction(self, function, delay=1000):
         for turn in range(self.turnCount, self.turnCount + delay):
             if (self.toBeCalled).has_key(turn):
-                result = self.toBeCalled[turn].remove(function)
+                result = False
+                # For some reason, lists throw an error if they try to remove an item they don't have <_<
+                try:
+                    result = self.toBeCalled[turn].remove(function)
+                except:
+                    pass
                 if result:
                     return True
         return False

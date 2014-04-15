@@ -17,6 +17,12 @@ class Character:
     def distance(self, x1, y1, x2, y2):
         return math.fabs(x1 - x2) + math.fabs(y1 - y2)
 
+    def immobilized(self):
+        for status in self.status:
+            if status == Status.STUN:
+                return True
+        return False
+
     def move(self, direction):
         if direction == Movement.MOVE_DOWN and self.y > -1 and self.y < (MAP_HEIGHT - 1):
             if (board.grid[self.x][self.y+1]).canMove(self):

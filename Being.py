@@ -1,3 +1,3 @@
-class Being:
-	def __init__(self):
-		pass
+class Being(object):
+    def __init__(self):
+        self.status = []

@@ -27,9 +27,7 @@ def makePlayer(being):
 
         def die(self):
             if self.hp <= 0:
-                (board.grid[self.x][self.y]).removeBeing(self)
-                self.x = -1
-                self.y = -1
+                super(Player, self).die()
                 Event.lossEvent()
 
         def killedFamiliar(self):
@@ -40,15 +38,15 @@ def makePlayer(being):
             self.magic += 200
 
         def takeTurn(self, event):
+            if self.immobilized():
+                return True
+
             if self.targeting is not None:
                 return self.takeTurnTargeting(event)
 
-            # If the user uses an ability button, begin targeting
-            # TO BE IMPLEMENTED
-
             if event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
                 magicLoss = self.abilityOne(self.x, self.y-1)
-                if magicLoss != 0:
+                if magicLoss is not None:
                     self.magic -= magicLoss
                     if self.magic <= 0:
                         Event.lossEvent()
@@ -57,7 +55,7 @@ def makePlayer(being):
 
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
                 magicLoss = self.abilityOne(self.x, self.y+1)
-                if magicLoss != 0:
+                if magicLoss is not None:
                     self.magic -= magicLoss
                     if self.magic <= 0:
                         Event.lossEvent()
@@ -66,7 +64,7 @@ def makePlayer(being):
 
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
                 magicLoss = self.abilityOne(self.x-1, self.y)
-                if magicLoss != 0:
+                if magicLoss is not None:
                     self.magic -= magicLoss
                     if self.magic <= 0:
                         Event.lossEvent()
@@ -75,7 +73,7 @@ def makePlayer(being):
 
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
                 magicLoss = self.abilityOne(self.x+1, self.y)
-                if magicLoss != 0:
+                if magicLoss is not None:
                     self.magic -= magicLoss
                     if self.magic <= 0:
                         Event.lossEvent()
@@ -83,31 +81,63 @@ def makePlayer(being):
                 return self.move(Movement.MOVE_RIGHT)
 
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_QUOTE:
-                self.targeting = ABILITY_ONE
-                # Setting targetX and targetY to a nearby enemy or the closest enemy would be awesome :)
-                self.targetX = self.x
-                self.targetY = self.y
-                return False
+                if self.abilityOneTargeted:
+                    self.targeting = ABILITY_ONE
+                    # Setting targetX and targetY to a nearby enemy or the closest enemy would be awesome :)
+                    self.targetX = self.x
+                    self.targetY = self.y
+                    return False
+                magicLoss = self.abilityOne()
+                if magicLoss is None:
+                    return False
+                self.magic -= magicLoss
+                if self.magic <= 0:
+                    Event.lossEvent()
+                return True
 
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_COMMA:
-                self.targeting = ABILITY_TWO
-                # Setting targetX and targetY to a nearby enemy or the closest enemy would be awesome :)
-                self.targetX = self.x
-                self.targetY = self.y
-                return False
+                if self.abilityTwoTargeted:
+                    self.targeting = ABILITY_TWO
+                    # Setting targetX and targetY to a nearby enemy or the closest enemy would be awesome :)
+                    self.targetX = self.x
+                    self.targetY = self.y
+                    return False
+                magicLoss = self.abilityTwo()
+                if magicLoss is None:
+                    return False
+                self.magic -= magicLoss
+                if self.magic <= 0:
+                    Event.lossEvent()
+                return True
 
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_PERIOD:
-                self.targeting = ABILITY_THREE
-                # Setting targetX and targetY to a nearby enemy or the closest enemy would be awesome :)
-                self.targetX = self.x
-                self.targetY = self.y
-                return False
+                if self.abilityThreeTargeted:
+                    self.targeting = ABILITY_THREE
+                    # Setting targetX and targetY to a nearby enemy or the closest enemy would be awesome :)
+                    self.targetX = self.x
+                    self.targetY = self.y
+                    return False
+                magicLoss = self.abilityThree()
+                if magicLoss is None:
+                    return False
+                self.magic -= magicLoss
+                if self.magic <= 0:
+                    Event.lossEvent()
+                return True
 
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_p:
-                self.targeting = ABILITY_FOUR
-                self.targetX = self.x
-                self.targetY = self.y
-                return False
+                if self.abilityFourTargeted:
+                    self.targeting = ABILITY_FOUR
+                    self.targetX = self.x
+                    self.targetY = self.y
+                    return False
+                magicLoss = self.abilityFour()
+                if magicLoss is None:
+                    return False
+                self.magic -= magicLoss
+                if self.magic <= 0:
+                    Event.lossEvent()
+                return True
 
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_y:
                 return True
@@ -138,7 +168,7 @@ def makePlayer(being):
                 elif event.key == pygame.K_QUOTE and self.targeting == ABILITY_ONE:
                     self.targeting = None
                     magicLoss = self.abilityOne(self.targetX, self.targetY)
-                    if magicLoss == 0:
+                    if magicLoss is None:
                         return False
                     self.magic -= magicLoss
                     if self.magic <= 0:
@@ -148,7 +178,7 @@ def makePlayer(being):
                 elif event.key == pygame.K_COMMA and self.targeting == ABILITY_TWO:
                     self.targeting = None
                     magicLoss = self.abilityTwo(self.targetX, self.targetY)
-                    if magicLoss == 0:
+                    if magicLoss is None:
                         return False
                     self.magic -= magicLoss
                     if self.magic <= 0:
@@ -158,7 +188,7 @@ def makePlayer(being):
                 elif event.key == pygame.K_PERIOD and self.targeting == ABILITY_THREE:
                     self.targeting = None
                     magicLoss = self.abilityThree(self.targetX, self.targetY)
-                    if magicLoss == 0:
+                    if magicLoss is None:
                         return False
                     self.magic -= magicLoss
                     if self.magic <= 0:
@@ -168,7 +198,7 @@ def makePlayer(being):
                 elif event.key == pygame.K_p and self.targeting == ABILITY_FOUR:
                     self.targeting = None
                     magicLoss = self.abilityFour(self.targetX, self.targetY)
-                    if magicLoss == 0:
+                    if magicLoss is None:
                         return False
                     self.magic -= magicLoss
                     if self.magic <= 0:

@@ -12,6 +12,9 @@ def makeEnemy(being):
     class Enemy(being, Character):
         def takeTurn(self):
             # For now, just move in a random direction unless the player is nearby
+            if self.immobilized():
+                return True
+
             if self.attack():
                 return
             direction = random.choice([Movement.MOVE_UP, Movement.MOVE_DOWN, Movement.MOVE_LEFT, Movement.MOVE_RIGHT])

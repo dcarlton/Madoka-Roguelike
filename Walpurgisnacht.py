@@ -1,17 +1,14 @@
-import pygame
-import sys
-from Witch import Witch
+from Being import Being
 from Enumerations import *
 from Event import Event
 from Graphics import Graphics
-from TurnManager import TurnManager
 from Map import Map
 
 board = Map.getInstance()
-turnManager = TurnManager.getInstance()
 
-class Walpurgisnacht(Witch):
+class Walpurgisnacht(Being):
     def __init__(self):
+        super(Walpurgisnacht, self).__init__()
         self.hp = 150
         self.strength = 25
         self.image = Graphics.getInstance().getImage(Images.WALPURGISNACHT_STANDING)
