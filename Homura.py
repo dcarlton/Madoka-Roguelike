@@ -1,0 +1,93 @@
+import pygame
+from CombatUtils import CombatUtils
+from Constants import *
+from Enumerations import *
+from Graphics import Graphics
+from MagicalGirl import MagicalGirl
+from Map import Map
+from TurnManager import TurnManager
+
+board = Map.getInstance()
+turnManager = TurnManager.getInstance()
+
+class Homura(MagicalGirl):
+    def __init__(self):
+        super(Homura, self).__init__()
+        self.maxHP = 100
+        self.hp = 100
+        self.magic = 100
+        self.x = 0
+        self.y = 0
+        self.regenerationRate = 5
+        self.block = BlockStatus.BLOCK_ALL
+        self.image = Graphics.getInstance().getImage(Images.HOMURA_STANDING)
+        self.rect = self.image.get_rect()
+        self.beingType = BeingType.MAGICAL_GIRL
+        self.score = 0
+
+        self.bombs = []
+        self.timeStopped = False
+
+        self.abilityOneName = "Golf Club"
+        self.abilityOneDamage = 10
+        self.abilityOneMagic = 5
+        self.abilityOneRange = 1
+        self.abilityOneStatus = None
+        self.abilityOneTargeted = True
+        self.abilityOneTargets = Victims.NON_PLAYER_AND_HUMAN
+
+        self.abilityTwoName = "Pistol"
+        self.abilityTwoDamage = 15
+        self.abilityTwoMagic = 10
+        self.abilityTwoRange = 3
+        self.abilityTwoStatus = None
+        self.abilityTwoTargeted = True
+        self.abilityTwoTargets = Victims.NON_PLAYER_AND_HUMAN
+
+        self.abilityThreeName = "Bomb"
+        self.abilityThreeDamage = 25
+        self.abilityThreeMagic = 0 # Using this so extra Magic won't be used up for each character hit by the explosion
+        self.abilityThreeRange = 1
+        self.abilityThreeStatus = None
+        self.abilityThreeTargeted = True
+        self.abilityThreeTargets = Victims.EVERYTHING
+        self.bombMagicCost = 10
+        self.bombTimer = 1
+        self.bombBlastZone = 2
+
+        self.abilityFourName = "Time Stop"
+        self.abilityFourDamage = 0
+        self.abilityFourMagic = 2
+        self.abilityFourRange = float('inf')
+        self.abilityFourStatus = None
+        self.abilityFourTargeted = False
+        self.abilityFourTargets = Victims.EVERYTHING
+
+        turnManager.delayFunction(self.regenerate, self.regenerationRate)
+
+    # Using the default MagicalGirl class for abilities 1-2
+    def abilityThree(self, x, y):
+        self.bombs.append((x, y))
+        turnManager.delayFunction(self.detonate, self.bombTimer)
+        self.magic -= self.bombMagicCost
+        if self.magic <= 0:
+            self.die()
+
+    def abilityFour(self, x, y):
+        pass # To be implemented later
+
+    def detonate(self):
+        bomb = self.bombs.pop(0)
+        # Remember to account for range starting at the first parameter, and stopping before the second parameter
+        # Which is really stupid <_< Why do that??? It's just confusing IMO
+        for x in range(bomb[0] - self.bombBlastZone, bomb[0] + self.bombBlastZone + 1):
+            for y in range(bomb[1] - self.bombBlastZone, bomb[1] + self.bombBlastZone + 1):
+                # This is REALLY inefficient, the loops make a square where there should be a diamond of explosions
+                if x < 0 or x >= MAP_WIDTH or y < 0 or y >= MAP_HEIGHT:
+                    continue
+                if CombatUtils.distance(x, y, bomb[0], bomb[1]) > self.bombBlastZone:
+                    continue
+                super(Homura, self).abilityThree(x, y)
+
+    def die(self):
+        self.timeStopped = False

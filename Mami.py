@@ -12,8 +12,8 @@ turnManager = TurnManager.getInstance()
 class Mami(MagicalGirl):
     def __init__(self):
         super(Mami, self).__init__()
-        self.maxHP = 1000
-        self.hp = 1000
+        self.maxHP = 100
+        self.hp = 100
         self.magic = 100
         self.x = 0
         self.y = 0
@@ -31,6 +31,7 @@ class Mami(MagicalGirl):
         self.abilityOneRange = 1
         self.abilityOneStatus = None
         self.abilityOneTargeted = True
+        self.abilityOneTargets = Victims.NON_PLAYER_AND_HUMAN
 
         self.abilityTwoName = "Musket Shot"
         self.abilityTwoDamage = 15
@@ -38,6 +39,7 @@ class Mami(MagicalGirl):
         self.abilityTwoRange = 3
         self.abilityTwoStatus = None
         self.abilityTwoTargeted = True
+        self.abilityTwoTargets = Victims.NON_PLAYER_AND_HUMAN
 
         self.abilityThreeName = "Trio Finale"
         self.abilityThreeDamage = 45
@@ -45,6 +47,7 @@ class Mami(MagicalGirl):
         self.abilityThreeRange = 3
         self.abilityThreeStatus = None
         self.abilityThreeTargeted = True
+        self.abilityThreeTargets = Victims.NON_PLAYER_AND_HUMAN
 
         self.abilityFourName = "Ribbon Tie"
         self.abilityFourDamage = 0
@@ -52,6 +55,7 @@ class Mami(MagicalGirl):
         self.abilityFourRange = float('inf')
         self.abilityFourStatus = Status.STUN
         self.abilityFourTargeted = True
+        self.abilityFourTargets = Victims.NON_PLAYER
 
         turnManager.delayFunction(self.regenerate, self.regenerationRate)
 

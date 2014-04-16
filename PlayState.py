@@ -5,6 +5,7 @@ from Enumerations import *
 from Event import Event
 from Familiar import Familiar
 from Graphics import Graphics
+from Homura import Homura
 from Mami import Mami
 from Map import Map
 from Mixer import Mixer
@@ -40,7 +41,7 @@ class PlayState(State):
             self.addFamiliar()
 
     def __init__(self):
-        self.player = makePlayer(Mami)
+        self.player = makePlayer(Homura)
         board.addCharacter(self.player)
 
         self.familiars = []

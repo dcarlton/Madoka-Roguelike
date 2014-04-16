@@ -20,6 +20,7 @@ class Graphics():
         self.screen = pygame.display.get_surface()
 
         self.images = dict()
+        self.images[Images.HOMURA_STANDING] = pygame.image.load("HomuraStanding.png").convert()
         self.images[Images.MAMI_STANDING] = pygame.image.load("MamiStanding.png").convert()
         self.images[Images.FAMILIAR_STANDING] = pygame.image.load("FamiliarStanding.png").convert()
         self.images[Images.WITCH_STANDING] = pygame.image.load("WitchStanding.png").convert()

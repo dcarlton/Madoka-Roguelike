@@ -14,11 +14,7 @@ class MagicalGirl(Being):
     def abilityOne(self, x, y):
         if not (-1 < x and x < MAP_WIDTH and -1 < y and y < MAP_HEIGHT):
             return None
-        if self.distance(self.x, self.y, x, y) > self.abilityOneRange:
-            return None
         if len((board.grid[x][y]).beings) > 0:
-            if board.grid[x][y].beings[-1] == self:
-                return None
             ((board.grid[x][y]).beings[-1]).hp -= self.abilityOneDamage
             if self.abilityOneStatus is not None:
                 ((board.grid[x][y]).beings[-1]).status.append(self.abilityOneStatus)
@@ -36,11 +32,7 @@ class MagicalGirl(Being):
     def abilityTwo(self, x, y):
         if not (-1 < x and x < MAP_WIDTH and -1 < y and y < MAP_HEIGHT):
             return None
-        if self.distance(self.x, self.y, x, y) > self.abilityTwoRange:
-            return None
         if len((board.grid[x][y]).beings) > 0:
-            if board.grid[x][y].beings[-1] == self:
-                return None
             ((board.grid[x][y]).beings[-1]).hp -= self.abilityTwoDamage
             if self.abilityTwoStatus is not None:
                 ((board.grid[x][y]).beings[-1]).status.append(self.abilityTwoStatus)
@@ -58,11 +50,7 @@ class MagicalGirl(Being):
     def abilityThree(self, x, y):
         if not (-1 < x and x < MAP_WIDTH and -1 < y and y < MAP_HEIGHT):
             return None
-        if self.distance(self.x, self.y, x, y) > self.abilityThreeRange:
-            return None
         if len((board.grid[x][y]).beings) > 0:
-            if board.grid[x][y].beings[-1] == self:
-                return None
             ((board.grid[x][y]).beings[-1]).hp -= self.abilityThreeDamage
             if self.abilityThreeStatus is not None:
                 ((board.grid[x][y]).beings[-1]).status.append(self.abilityThreeStatus)
@@ -80,11 +68,7 @@ class MagicalGirl(Being):
     def abilityFour(self, x, y):
         if not (-1 < x and x < MAP_WIDTH and -1 < y and y < MAP_HEIGHT):
             return None
-        if self.distance(self.x, self.y, x, y) > self.abilityFourRange:
-            return None
         if len((board.grid[x][y]).beings) > 0:
-            if board.grid[x][y].beings[-1] == self:
-                return None
             ((board.grid[x][y]).beings[-1]).hp -= self.abilityFourDamage
             if self.abilityFourStatus is not None:
                 ((board.grid[x][y]).beings[-1]).status.append(self.abilityFourStatus)

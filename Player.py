@@ -1,6 +1,7 @@
 import pygame
 import sys
 from Character import Character
+from CombatUtils import CombatUtils
 from Constants import *
 from Enumerations import *
 from Event import Event
@@ -87,7 +88,7 @@ def makePlayer(being):
                     self.targetX = self.x
                     self.targetY = self.y
                     return False
-                magicLoss = self.abilityOne()
+                magicLoss = self.abilityOne(self,x, self.y)
                 if magicLoss is None:
                     return False
                 self.magic -= magicLoss
@@ -102,7 +103,7 @@ def makePlayer(being):
                     self.targetX = self.x
                     self.targetY = self.y
                     return False
-                magicLoss = self.abilityTwo()
+                magicLoss = self.abilityTwo(self.x, self.y)
                 if magicLoss is None:
                     return False
                 self.magic -= magicLoss
@@ -117,7 +118,7 @@ def makePlayer(being):
                     self.targetX = self.x
                     self.targetY = self.y
                     return False
-                magicLoss = self.abilityThree()
+                magicLoss = self.abilityThree(self.x, self.y)
                 if magicLoss is None:
                     return False
                 self.magic -= magicLoss
@@ -131,7 +132,7 @@ def makePlayer(being):
                     self.targetX = self.x
                     self.targetY = self.y
                     return False
-                magicLoss = self.abilityFour()
+                magicLoss = self.abilityFour(self.x, self.y)
                 if magicLoss is None:
                     return False
                 self.magic -= magicLoss
@@ -146,27 +147,33 @@ def makePlayer(being):
         def takeTurnTargeting(self, event):
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
-                    if self.targetY > 0 and self.distance(self.x, self.y, self.targetX, self.targetY - 1) <= self.getRange(self.targeting):
+                    if self.targetY > 0 and CombatUtils.distance(self.x, self.y, self.targetX, self.targetY - 1) <= self.getRange(self.targeting):
                         self.targetY -= 1
                     return False
 
                 elif event.key == pygame.K_DOWN:
-                    if self.targetY < (MAP_HEIGHT - 1) and self.distance(self.x, self.y, self.targetX, self.targetY + 1) <= self.getRange(self.targeting):
+                    if self.targetY < (MAP_HEIGHT - 1) and CombatUtils.distance(self.x, self.y, self.targetX, self.targetY + 1) <= self.getRange(self.targeting):
                         self.targetY += 1
                     return False
 
                 elif event.key == pygame.K_LEFT:
-                    if self.targetX > 0 and self.distance(self.x, self.y, self.targetX - 1, self.targetY) <= self.getRange(self.targeting):
+                    if self.targetX > 0 and CombatUtils.distance(self.x, self.y, self.targetX - 1, self.targetY) <= self.getRange(self.targeting):
                         self.targetX -= 1
                     return False
 
                 elif event.key == pygame.K_RIGHT:
-                    if self.targetX < (MAP_WIDTH - 1) and self.distance(self.x, self.y, self.targetX + 1, self.targetY) <= self.getRange(self.targeting):
+                    if self.targetX < (MAP_WIDTH - 1) and CombatUtils.distance(self.x, self.y, self.targetX + 1, self.targetY) <= self.getRange(self.targeting):
                         self.targetX += 1
                     return False
 
                 elif event.key == pygame.K_QUOTE and self.targeting == ABILITY_ONE:
                     self.targeting = None
+                    if not board.grid[self.targetX][self.targetY].beings:
+                        target = None
+                    else:
+                        target = board.grid[self.targetX][self.targetY].beings[-1]
+                    if not CombatUtils.canTarget(target, self.abilityOneTargets):
+                        return False
                     magicLoss = self.abilityOne(self.targetX, self.targetY)
                     if magicLoss is None:
                         return False
@@ -177,6 +184,12 @@ def makePlayer(being):
 
                 elif event.key == pygame.K_COMMA and self.targeting == ABILITY_TWO:
                     self.targeting = None
+                    if not board.grid[self.targetX][self.targetY].beings:
+                        target = None
+                    else:
+                        target = board.grid[self.targetX][self.targetY].beings[-1]
+                    if not CombatUtils.canTarget(target, self.abilityTwoTargets):
+                        return False
                     magicLoss = self.abilityTwo(self.targetX, self.targetY)
                     if magicLoss is None:
                         return False
@@ -187,6 +200,12 @@ def makePlayer(being):
 
                 elif event.key == pygame.K_PERIOD and self.targeting == ABILITY_THREE:
                     self.targeting = None
+                    if not board.grid[self.targetX][self.targetY].beings:
+                        target = None
+                    else:
+                        target = board.grid[self.targetX][self.targetY].beings[-1]
+                    if not CombatUtils.canTarget(target, self.abilityThreeTargets):
+                        return False
                     magicLoss = self.abilityThree(self.targetX, self.targetY)
                     if magicLoss is None:
                         return False
@@ -197,6 +216,12 @@ def makePlayer(being):
 
                 elif event.key == pygame.K_p and self.targeting == ABILITY_FOUR:
                     self.targeting = None
+                    if not board.grid[self.targetX][self.targetY].beings:
+                        target = None
+                    else:
+                        target = board.grid[self.targetX][self.targetY].beings[-1]
+                    if not CombatUtils.canTarget(target, self.abilityFourTargets):
+                        return False
                     magicLoss = self.abilityFour(self.targetX, self.targetY)
                     if magicLoss is None:
                         return False

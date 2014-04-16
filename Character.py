@@ -14,9 +14,6 @@ class Character:
             return True
         return False
 
-    def distance(self, x1, y1, x2, y2):
-        return math.fabs(x1 - x2) + math.fabs(y1 - y2)
-
     def immobilized(self):
         for status in self.status:
             if status == Status.STUN:
