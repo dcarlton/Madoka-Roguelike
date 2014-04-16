@@ -83,6 +83,11 @@ class MagicalGirl(Being):
             return self.abilityFourMagic
         return None
 
+    def endTurn(self, success):
+        # Each magical girl can overwrite this class to do end-of-turn effects, mainly Time Stop hijinks
+        # Currently only called if success might be true; turns which were not taken are ignored
+        return success
+
     def getRange(self, ability):
         if ability == 1:
             return self.abilityOneRange

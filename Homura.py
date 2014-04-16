@@ -2,6 +2,7 @@ import pygame
 from CombatUtils import CombatUtils
 from Constants import *
 from Enumerations import *
+from Event import Event
 from Graphics import Graphics
 from MagicalGirl import MagicalGirl
 from Map import Map
@@ -65,16 +66,19 @@ class Homura(MagicalGirl):
 
         turnManager.delayFunction(self.regenerate, self.regenerationRate)
 
-    # Using the default MagicalGirl class for abilities 1-2
+    # Letting the MagicalGirl class handle abilities 1 and 2
     def abilityThree(self, x, y):
         self.bombs.append((x, y))
         turnManager.delayFunction(self.detonate, self.bombTimer)
-        self.magic -= self.bombMagicCost
-        if self.magic <= 0:
-            self.die()
+        return self.bombMagicCost
 
     def abilityFour(self, x, y):
-        pass # To be implemented later
+        if self.timeStopped:
+            self.timeStopped = False
+            return 0 # Magic is only used up at the end of the turn
+        self.timeStopped = True
+        self.magic -= self.abilityFourMagic
+        return None
 
     def detonate(self):
         bomb = self.bombs.pop(0)
@@ -91,3 +95,11 @@ class Homura(MagicalGirl):
 
     def die(self):
         self.timeStopped = False
+
+    def endTurn(self, success):
+        if success == False or not self.timeStopped:
+            return success
+        self.magic -= self.abilityFourMagic
+        if self.magic <= 0:
+            self.die()
+        return False

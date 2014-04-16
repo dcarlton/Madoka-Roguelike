@@ -43,7 +43,8 @@ def makePlayer(being):
                 return True
 
             if self.targeting is not None:
-                return self.takeTurnTargeting(event)
+                success = self.takeTurnTargeting(event)
+                return self.endTurn(success)
 
             if event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
                 magicLoss = self.abilityOne(self.x, self.y-1)
@@ -51,8 +52,9 @@ def makePlayer(being):
                     self.magic -= magicLoss
                     if self.magic <= 0:
                         Event.lossEvent()
-                    return True
-                return self.move(Movement.MOVE_UP)
+                    return self.endTurn(True)
+                success = self.move(Movement.MOVE_UP)
+                return self.endTurn(success)
 
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
                 magicLoss = self.abilityOne(self.x, self.y+1)
@@ -60,8 +62,9 @@ def makePlayer(being):
                     self.magic -= magicLoss
                     if self.magic <= 0:
                         Event.lossEvent()
-                    return True
-                return self.move(Movement.MOVE_DOWN)
+                    return self.endTurn(True)
+                success = self.move(Movement.MOVE_DOWN)
+                return self.endTurn(success)
 
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
                 magicLoss = self.abilityOne(self.x-1, self.y)
@@ -69,8 +72,9 @@ def makePlayer(being):
                     self.magic -= magicLoss
                     if self.magic <= 0:
                         Event.lossEvent()
-                    return True
-                return self.move(Movement.MOVE_LEFT)
+                    return self.endTurn(True)
+                success = self.move(Movement.MOVE_LEFT)
+                return self.endTurn(success)
 
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
                 magicLoss = self.abilityOne(self.x+1, self.y)
@@ -78,8 +82,9 @@ def makePlayer(being):
                     self.magic -= magicLoss
                     if self.magic <= 0:
                         Event.lossEvent()
-                    return True
-                return self.move(Movement.MOVE_RIGHT)
+                    return self.endTurn(True)
+                success = self.move(Movement.MOVE_RIGHT)
+                return self.endTurn(success)
 
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_QUOTE:
                 if self.abilityOneTargeted:
@@ -94,7 +99,7 @@ def makePlayer(being):
                 self.magic -= magicLoss
                 if self.magic <= 0:
                     Event.lossEvent()
-                return True
+                return self.endTurn(True)
 
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_COMMA:
                 if self.abilityTwoTargeted:
@@ -109,7 +114,7 @@ def makePlayer(being):
                 self.magic -= magicLoss
                 if self.magic <= 0:
                     Event.lossEvent()
-                return True
+                return self.endTurn(True)
 
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_PERIOD:
                 if self.abilityThreeTargeted:
@@ -124,7 +129,7 @@ def makePlayer(being):
                 self.magic -= magicLoss
                 if self.magic <= 0:
                     Event.lossEvent()
-                return True
+                return self.endTurn(True)
 
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_p:
                 if self.abilityFourTargeted:
@@ -138,10 +143,10 @@ def makePlayer(being):
                 self.magic -= magicLoss
                 if self.magic <= 0:
                     Event.lossEvent()
-                return True
+                return self.endTurn(True)
 
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_y:
-                return True
+                return self.endTurn(True)
             return False
 
         def takeTurnTargeting(self, event):

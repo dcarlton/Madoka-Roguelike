@@ -28,8 +28,8 @@ class TurnManager():
             self.toBeCalled[self.turnCount + delay] = [function]
 
     def endTurn(self):
-        self.turnCount += 1
         self.callDelayedFunctions()
+        self.turnCount += 1
 
     def removeDelayedFunction(self, function, delay=1000):
         for turn in range(self.turnCount, self.turnCount + delay):
