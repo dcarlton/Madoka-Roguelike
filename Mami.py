@@ -1,7 +1,7 @@
 import pygame
 from Constants import *
 from Enumerations import *
-from Graphics import Graphics
+from Images import Images
 from MagicalGirl import MagicalGirl
 from Map import Map
 from TurnManager import TurnManager
@@ -19,7 +19,7 @@ class Mami(MagicalGirl):
         self.y = 0
         self.regenerationRate = 5
         self.block = BlockStatus.BLOCK_ALL
-        self.image = Graphics.getInstance().getImage(Images.MAMI_STANDING)
+        self.image = Images.getInstance().getImage(Sprites.MAMI_STANDING)
         self.rect = self.image.get_rect()
         self.beingType = BeingType.MAGICAL_GIRL
         self.score = 0

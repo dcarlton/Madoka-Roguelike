@@ -1,7 +1,7 @@
 from Being import Being
 from Enumerations import *
 from Event import Event
-from Graphics import Graphics
+from Images import Images
 from Map import Map
 
 board = Map.getInstance()
@@ -11,7 +11,7 @@ class Walpurgisnacht(Being):
         super(Walpurgisnacht, self).__init__()
         self.hp = 150
         self.strength = 25
-        self.image = Graphics.getInstance().getImage(Images.WALPURGISNACHT_STANDING)
+        self.image = Images.getInstance().getImage(Sprites.WALPURGISNACHT_STANDING)
         self.rect = self.image.get_rect()
         self.beingType = BeingType.WALPURGISNACHT
         self.block = BlockStatus.BLOCK_ALL

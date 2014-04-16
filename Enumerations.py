@@ -26,7 +26,7 @@ class EventType:
     WIN = pygame.USEREVENT
     LOSS = pygame.USEREVENT + 1
 
-class Images:
+class Sprites:
     MAMI_STANDING = 0
     HOMURA_STANDING = 1000
     FAMILIAR_STANDING = 6000

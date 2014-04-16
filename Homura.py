@@ -3,7 +3,7 @@ from CombatUtils import CombatUtils
 from Constants import *
 from Enumerations import *
 from Event import Event
-from Graphics import Graphics
+from Images import Images
 from MagicalGirl import MagicalGirl
 from Map import Map
 from TurnManager import TurnManager
@@ -21,7 +21,7 @@ class Homura(MagicalGirl):
         self.y = 0
         self.regenerationRate = 5
         self.block = BlockStatus.BLOCK_ALL
-        self.image = Graphics.getInstance().getImage(Images.HOMURA_STANDING)
+        self.image = Images.getInstance().getImage(Sprites.HOMURA_STANDING)
         self.rect = self.image.get_rect()
         self.beingType = BeingType.MAGICAL_GIRL
         self.score = 0

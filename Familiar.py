@@ -1,7 +1,7 @@
 import pygame
 from Being import Being
 from Enumerations import *
-from Graphics import Graphics
+from Images import Images
 
 class Familiar(Being):
     def __init__(self):
@@ -11,7 +11,7 @@ class Familiar(Being):
         self.x = 0
         self.y = 0
         self.strength = 10
-        self.image = Graphics.getInstance().getImage(Images.FAMILIAR_STANDING)
+        self.image = Images.getInstance().getImage(Sprites.FAMILIAR_STANDING)
         self.rect = self.image.get_rect()
         self.beingType = BeingType.FAMILIAR
         self.block = BlockStatus.BLOCK_ALL

@@ -1,5 +1,6 @@
 import pygame
-from Enumerations import Images
+from Enumerations import Sprites
+from Images import Images
 from Map import Map
 
 class Graphics():
@@ -19,15 +20,6 @@ class Graphics():
     def construct(self):
         self.screen = pygame.display.get_surface()
 
-        self.images = dict()
-        self.images[Images.HOMURA_STANDING] = pygame.image.load("HomuraStanding.png").convert()
-        self.images[Images.MAMI_STANDING] = pygame.image.load("MamiStanding.png").convert()
-        self.images[Images.FAMILIAR_STANDING] = pygame.image.load("FamiliarStanding.png").convert()
-        self.images[Images.WITCH_STANDING] = pygame.image.load("WitchStanding.png").convert()
-        self.images[Images.WALPURGISNACHT_STANDING] = pygame.image.load("WalpurgisnachtStanding.png").convert()
-        self.images[Images.TARGET_CURSOR] = pygame.image.load("TargetCursor.png").convert()
-        self.images[Images.TARGET_CURSOR].set_colorkey((255, 255, 255))
-
     def drawCharacter(self, character):
         character.rect.x = character.x * 16
         character.rect.y = character.y * 16
@@ -43,9 +35,6 @@ class Graphics():
 
         if player.targeting is not None:
             targetRect = pygame.Rect(player.targetX * 16, player.targetY * 16, 16, 16)
-            self.screen.blit(self.images[Images.TARGET_CURSOR], targetRect)
+            self.screen.blit(Images.getInstance().getImage(Sprites.TARGET_CURSOR), targetRect)
 
         pygame.display.flip()
-
-    def getImage(self, image):
-        return self.images[image]
