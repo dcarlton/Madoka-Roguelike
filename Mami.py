@@ -27,7 +27,7 @@ class Mami(MagicalGirl):
 
         self.abilityOneName = "Musket Slam"
         self.abilityOneDamage = 10
-        self.abilityOneMagic = 5
+        self.abilityOneMagic = 3
         self.abilityOneRange = 1
         self.abilityOneStatus = None
         self.abilityOneTargeted = True
@@ -35,7 +35,7 @@ class Mami(MagicalGirl):
 
         self.abilityTwoName = "Musket Shot"
         self.abilityTwoDamage = 15
-        self.abilityTwoMagic = 10
+        self.abilityTwoMagic = 5
         self.abilityTwoRange = 3
         self.abilityTwoStatus = None
         self.abilityTwoTargeted = True

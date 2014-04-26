@@ -48,7 +48,8 @@ class PlayState(State):
         self.witches = []
         self.walpurgisnacht = False
         self.addWitch()
-        turnManager.delayFunction(self.addWalpurgisnacht, 1)
+        self.addWitch()
+        turnManager.delayFunction(self.addWalpurgisnacht, 100)
 
         mixer.playSong("Magia.wav")
 

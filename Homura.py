@@ -53,7 +53,7 @@ class Homura(MagicalGirl):
         self.abilityThreeTargeted = True
         self.abilityThreeTargets = Victims.EVERYTHING
         self.bombMagicCost = 10
-        self.bombTimer = 1
+        self.bombTimer = 0
         self.bombBlastZone = 2
 
         self.abilityFourName = "Time Stop"
