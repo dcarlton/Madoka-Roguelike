@@ -34,3 +34,6 @@ class Map:
                 character.x = x
                 character.y = y
                 return
+
+    def removeBeing(self, being):
+        return self.grid[being.x][being.y].removeBeing(being)

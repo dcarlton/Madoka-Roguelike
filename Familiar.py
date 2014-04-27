@@ -1,5 +1,6 @@
 import pygame
 from Being import Being
+from Event import Event
 from Enumerations import *
 from Images import Images
 
@@ -15,3 +16,7 @@ class Familiar(Being):
         self.rect = self.image.get_rect()
         self.beingType = BeingType.FAMILIAR
         self.block = BlockStatus.BLOCK_ALL
+
+    def die(self):
+        if self.hp <= 0:
+            Event.diedEvent(BeingType.FAMILIAR)

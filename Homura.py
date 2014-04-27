@@ -93,6 +93,16 @@ class Homura(MagicalGirl):
                     continue
                 super(Homura, self).abilityThree(x, y)
 
+        # Normally, enemy deaths are checked at the end of the player's turn
+        # But bombs don't work that way
+        for event in pygame.event.get(EventType.DIED):
+            if event.beingType == BeingType.FAMILIAR:
+                self.killedFamiliar()
+            elif event.beingType == BeingType.WITCH:
+                self.killedWitch()
+            elif event.beingType == BeingType.WALPURGISNACHT:
+                self.killedWalpurgisnacht()
+
     def die(self):
         self.timeStopped = False
 

@@ -29,14 +29,28 @@ def makePlayer(being):
         def die(self):
             if self.hp <= 0:
                 super(Player, self).die()
+                Event.diedEvent(BeingType.MAGICAL_GIRL)
                 Event.lossEvent()
 
+        def endTurn(self, success):
+            for event in pygame.event.get(EventType.DIED):
+                if event.beingType == BeingType.FAMILIAR:
+                    self.killedFamiliar()
+                elif event.beingType == BeingType.WITCH:
+                    self.killedWitch()
+                elif event.beingType == BeingType.WALPURGISNACHT:
+                    self.killedWalpurgisnacht()
+            return super(Player, self).endTurn(success)
+
         def killedFamiliar(self):
-            self.score += 100
+            self.score += FAMILIAR_SCORE
 
         def killedWitch(self):
-            self.score += 100
-            self.magic += 200
+            self.score += WITCH_SCORE
+            self.magic += SOUL_GEM_MAGIC
+
+        def killedWalpurgisnacht(self):
+            self.score += WALPURGISNACHT_SCORE
 
         def takeTurn(self, event):
             if self.immobilized():

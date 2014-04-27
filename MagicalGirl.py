@@ -19,12 +19,6 @@ class MagicalGirl(Being):
             if self.abilityOneStatus is not None:
                 ((board.grid[x][y]).beings[-1]).status.append(self.abilityOneStatus)
             if ((board.grid[x][y]).beings[-1]).hp <= 0:
-                dead = (board.grid[x][y]).beings[-1]
-                if dead.beingType == BeingType.FAMILIAR:
-                    self.score += 100
-                elif dead.beingType == BeingType.WITCH:
-                    self.score += 100
-                    self.magic += 200
                 ((board.grid[x][y]).beings[-1]).die()
             return self.abilityOneMagic
         return None
@@ -37,12 +31,6 @@ class MagicalGirl(Being):
             if self.abilityTwoStatus is not None:
                 ((board.grid[x][y]).beings[-1]).status.append(self.abilityTwoStatus)
             if ((board.grid[x][y]).beings[-1]).hp <= 0:
-                dead = (board.grid[x][y]).beings[-1]
-                if dead.beingType == BeingType.FAMILIAR:
-                    self.score += 100
-                elif dead.beingType == BeingType.WITCH:
-                    self.score += 100
-                    self.magic += 200
                 ((board.grid[x][y]).beings[-1]).die()
             return self.abilityTwoMagic
         return None
@@ -55,12 +43,6 @@ class MagicalGirl(Being):
             if self.abilityThreeStatus is not None:
                 ((board.grid[x][y]).beings[-1]).status.append(self.abilityThreeStatus)
             if ((board.grid[x][y]).beings[-1]).hp <= 0:
-                dead = (board.grid[x][y]).beings[-1]
-                if dead.beingType == BeingType.FAMILIAR:
-                    self.score += 100
-                elif dead.beingType == BeingType.WITCH:
-                    self.score += 100
-                    self.magic += 200
                 ((board.grid[x][y]).beings[-1]).die()
             return self.abilityThreeMagic
         return None
@@ -73,12 +55,6 @@ class MagicalGirl(Being):
             if self.abilityFourStatus is not None:
                 ((board.grid[x][y]).beings[-1]).status.append(self.abilityFourStatus)
             if ((board.grid[x][y]).beings[-1]).hp <= 0:
-                dead = (board.grid[x][y]).beings[-1]
-                if dead.beingType == BeingType.FAMILIAR:
-                    self.score += 100
-                elif dead.beingType == BeingType.WITCH:
-                    self.score += 100
-                    self.magic += 200
                 ((board.grid[x][y]).beings[-1]).die()
             return self.abilityFourMagic
         return None

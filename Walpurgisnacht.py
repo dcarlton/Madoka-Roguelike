@@ -1,3 +1,4 @@
+import pygame
 from Being import Being
 from Enumerations import *
 from Event import Event
@@ -18,7 +19,5 @@ class Walpurgisnacht(Being):
 
     def die(self):
         if self.hp <= 0:
-            (board.grid[self.x][self.y]).removeBeing(self)
-            self.x = -1
-            self.y = -1
+            Event.diedEvent(BeingType.WALPURGISNACHT)
             Event.winEvent()

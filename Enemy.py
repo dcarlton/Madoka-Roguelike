@@ -71,4 +71,11 @@ def makeEnemy(being):
             # There are no other characters surrounding the enemy
             return False
 
+        def die(self):
+            if self.hp <= 0:
+                super(Enemy, self).die()
+                board.removeBeing(self)
+                self.x = -1
+                self.y = -1
+
     return Enemy()

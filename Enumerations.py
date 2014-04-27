@@ -25,6 +25,7 @@ class BeingType:
 class EventType:
     WIN = pygame.USEREVENT
     LOSS = pygame.USEREVENT + 1
+    DIED = pygame.USEREVENT + 2
 
 class Sprites:
     MAMI_STANDING = 0
