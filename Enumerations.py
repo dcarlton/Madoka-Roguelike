@@ -31,6 +31,7 @@ class Sprites:
     MAMI_STANDING = 0
     HOMURA_STANDING = 1000
     TIME_STOP_EFFECT = 1500
+    SAYAKA_STANDING = 2000
     FAMILIAR_STANDING = 6000
     WITCH_STANDING = 7000
     WALPURGISNACHT_STANDING = 8000
@@ -45,4 +46,4 @@ class Victims:
     NON_ENEMY = 3
     NON_PLAYER = 4
     NONE = 5
-    EVERYTHING = 6
+    EVERYTHING = 6 # Can target empty spaces as well as characters

@@ -19,6 +19,7 @@ class Images():
         self.images = dict()
         self.images[Sprites.HOMURA_STANDING] = pygame.image.load("HomuraStanding.png").convert()
         self.images[Sprites.MAMI_STANDING] = pygame.image.load("MamiStanding.png").convert()
+        self.images[Sprites.SAYAKA_STANDING] = pygame.image.load("SayakaStanding.png").convert()
         self.images[Sprites.FAMILIAR_STANDING] = pygame.image.load("FamiliarStanding.png").convert()
         self.images[Sprites.WITCH_STANDING] = pygame.image.load("WitchStanding.png").convert()
         self.images[Sprites.WALPURGISNACHT_STANDING] = pygame.image.load("WalpurgisnachtStanding.png").convert()

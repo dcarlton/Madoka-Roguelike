@@ -10,6 +10,7 @@ from Mami import Mami
 from Map import Map
 from Mixer import Mixer
 from Player import makePlayer
+from Sayaka import Sayaka
 from State import State
 from TurnManager import TurnManager
 from Walpurgisnacht import Walpurgisnacht
@@ -41,7 +42,7 @@ class PlayState(State):
             self.addFamiliar()
 
     def __init__(self):
-        self.player = makePlayer(Homura)
+        self.player = makePlayer(Sayaka)
         board.addCharacter(self.player)
 
         self.familiars = []
