@@ -48,7 +48,7 @@ class Sayaka(MagicalGirl):
         self.abilityThreeRange = float('inf')
         self.abilityThreeStatus = None
         self.abilityThreeTargeted = True
-        self.abilityThreeTargets = Victims.NON_PLAYER_AND_HUMAN
+        self.abilityThreeTargets = Victims.EVERYTHING
         self.jetMagicCost = 5
 
         self.abilityFourName = "Heal"
@@ -63,8 +63,36 @@ class Sayaka(MagicalGirl):
 
     # Letting the MagicalGirl class handle abilities 1 and 2
     def abilityThree(self, x, y):
-        # Will implement it later
-        pass
+        targets = []
+        firstSpace = self.targetPath.pop(0)
+        prevSpace = firstSpace
+        if not self.targetPath:
+            return None
+
+        for space in self.targetPath:
+            if board.grid[space[0]][space[1]].beings:
+                target = board.grid[space[0]][space[1]].beings[-1]
+                if target not in targets:
+                    targets.append(target)
+                if (space[0] - prevSpace[0]) == 1:
+                    target.move(Movement.MOVE_RIGHT)
+                elif (space[0] - prevSpace[0]) == -1:
+                    target.move(Movement.MOVE_LEFT)
+                elif (space[1] - prevSpace[1]) == 1:
+                    target.move(Movement.MOVE_DOWN)
+                elif (space[1] - prevSpace[1]) == -1:
+                    target.move(Movement.MOVE_UP)
+            prevSpace = space
+        self.targetPath.insert(0, firstSpace)
+
+        for space in reversed(self.targetPath):
+            success = self.teleport(space[0], space[1])
+            if success:
+                break
+
+        for target in targets:
+            super(Sayaka, self).abilityThree(target.x, target.y)
+        return self.jetMagicCost * len(self.targetPath)
 
     def abilityFour(self, x, y):
         if self.hp >= self.maxHP:

@@ -23,6 +23,7 @@ def makePlayer(being):
 
             # Ugh, poor naming...can be equal to ABILITY_ONE, ABILITY_TWO, etc. or None if not targeting
             self.targeting = None
+            self.targetPath = []
             self.targetX = 0
             self.targetY = 0
 
@@ -103,7 +104,7 @@ def makePlayer(being):
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_QUOTE:
                 if self.abilityOneTargeted:
                     self.targeting = ABILITY_ONE
-                    # Setting targetX and targetY to a nearby enemy or the closest enemy would be awesome :)
+                    self.targetPath.append((self.x, self.y))
                     self.targetX = self.x
                     self.targetY = self.y
                     return False
@@ -118,7 +119,7 @@ def makePlayer(being):
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_COMMA:
                 if self.abilityTwoTargeted:
                     self.targeting = ABILITY_TWO
-                    # Setting targetX and targetY to a nearby enemy or the closest enemy would be awesome :)
+                    self.targetPath.append((self.x, self.y))
                     self.targetX = self.x
                     self.targetY = self.y
                     return False
@@ -133,7 +134,7 @@ def makePlayer(being):
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_PERIOD:
                 if self.abilityThreeTargeted:
                     self.targeting = ABILITY_THREE
-                    # Setting targetX and targetY to a nearby enemy or the closest enemy would be awesome :)
+                    self.targetPath.append((self.x, self.y))
                     self.targetX = self.x
                     self.targetY = self.y
                     return False
@@ -148,6 +149,7 @@ def makePlayer(being):
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_p:
                 if self.abilityFourTargeted:
                     self.targeting = ABILITY_FOUR
+                    self.targetPath.append((self.x, self.y))
                     self.targetX = self.x
                     self.targetY = self.y
                     return False
@@ -168,21 +170,25 @@ def makePlayer(being):
                 if event.key == pygame.K_UP:
                     if self.targetY > 0 and CombatUtils.distance(self.x, self.y, self.targetX, self.targetY - 1) <= self.getRange(self.targeting):
                         self.targetY -= 1
+                        self.targetPath.append((self.targetX, self.targetY))
                     return False
 
                 elif event.key == pygame.K_DOWN:
                     if self.targetY < (MAP_HEIGHT - 1) and CombatUtils.distance(self.x, self.y, self.targetX, self.targetY + 1) <= self.getRange(self.targeting):
                         self.targetY += 1
+                        self.targetPath.append((self.targetX, self.targetY))
                     return False
 
                 elif event.key == pygame.K_LEFT:
                     if self.targetX > 0 and CombatUtils.distance(self.x, self.y, self.targetX - 1, self.targetY) <= self.getRange(self.targeting):
                         self.targetX -= 1
+                        self.targetPath.append((self.targetX, self.targetY))
                     return False
 
                 elif event.key == pygame.K_RIGHT:
                     if self.targetX < (MAP_WIDTH - 1) and CombatUtils.distance(self.x, self.y, self.targetX + 1, self.targetY) <= self.getRange(self.targeting):
                         self.targetX += 1
+                        self.targetPath.append((self.targetX, self.targetY))
                     return False
 
                 elif event.key == pygame.K_QUOTE and self.targeting == ABILITY_ONE:
@@ -192,8 +198,10 @@ def makePlayer(being):
                     else:
                         target = board.grid[self.targetX][self.targetY].beings[-1]
                     if not CombatUtils.canTarget(target, self.abilityOneTargets):
+                        self.targetPath = []
                         return False
                     magicLoss = self.abilityOne(self.targetX, self.targetY)
+                    self.targetPath = []
                     if magicLoss is None:
                         return False
                     self.magic -= magicLoss
@@ -208,8 +216,10 @@ def makePlayer(being):
                     else:
                         target = board.grid[self.targetX][self.targetY].beings[-1]
                     if not CombatUtils.canTarget(target, self.abilityTwoTargets):
+                        self.targetPath = []
                         return False
                     magicLoss = self.abilityTwo(self.targetX, self.targetY)
+                    self.targetPath = []
                     if magicLoss is None:
                         return False
                     self.magic -= magicLoss
@@ -224,8 +234,10 @@ def makePlayer(being):
                     else:
                         target = board.grid[self.targetX][self.targetY].beings[-1]
                     if not CombatUtils.canTarget(target, self.abilityThreeTargets):
+                        self.targetPath = []
                         return False
                     magicLoss = self.abilityThree(self.targetX, self.targetY)
+                    self.targetPath = []
                     if magicLoss is None:
                         return False
                     self.magic -= magicLoss
@@ -240,8 +252,10 @@ def makePlayer(being):
                     else:
                         target = board.grid[self.targetX][self.targetY].beings[-1]
                     if not CombatUtils.canTarget(target, self.abilityFourTargets):
+                        self.targetPath = []
                         return False
                     magicLoss = self.abilityFour(self.targetX, self.targetY)
+                    self.targetPath = []
                     if magicLoss is None:
                         return False
                     self.magic -= magicLoss

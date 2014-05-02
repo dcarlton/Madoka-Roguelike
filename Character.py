@@ -51,6 +51,17 @@ class Character:
             return False
         return False
 
+    def teleport(self, x, y):
+        if x < 0 or x >= MAP_WIDTH or y < 0 or y >= MAP_HEIGHT:
+            return False
+        if board.grid[x][y].canMove(self):
+            board.grid[self.x][self.y].removeBeing(self)
+            board.grid[x][y].addBeing(self)
+            self.x = x
+            self.y = y
+            return True
+        return False
+
     def die(self):
         if self.hp <= 0:
             (board.grid[self.x][self.y]).removeBeing(self)
