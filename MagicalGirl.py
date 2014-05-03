@@ -15,11 +15,9 @@ class MagicalGirl(Being):
         if not (-1 < x and x < MAP_WIDTH and -1 < y and y < MAP_HEIGHT):
             return None
         if len((board.grid[x][y]).beings) > 0:
-            ((board.grid[x][y]).beings[-1]).hp -= self.abilityOneDamage
+            ((board.grid[x][y]).beings[-1]).takeDamage(self, self.abilityOneDamage)
             if self.abilityOneStatus is not None:
                 ((board.grid[x][y]).beings[-1]).status.append(self.abilityOneStatus)
-            if ((board.grid[x][y]).beings[-1]).hp <= 0:
-                ((board.grid[x][y]).beings[-1]).die()
             return self.abilityOneMagic
         return None
 
@@ -27,11 +25,9 @@ class MagicalGirl(Being):
         if not (-1 < x and x < MAP_WIDTH and -1 < y and y < MAP_HEIGHT):
             return None
         if len((board.grid[x][y]).beings) > 0:
-            ((board.grid[x][y]).beings[-1]).hp -= self.abilityTwoDamage
+            ((board.grid[x][y]).beings[-1]).takeDamage(self, self.abilityTwoDamage)
             if self.abilityTwoStatus is not None:
                 ((board.grid[x][y]).beings[-1]).status.append(self.abilityTwoStatus)
-            if ((board.grid[x][y]).beings[-1]).hp <= 0:
-                ((board.grid[x][y]).beings[-1]).die()
             return self.abilityTwoMagic
         return None
 
@@ -39,11 +35,9 @@ class MagicalGirl(Being):
         if not (-1 < x and x < MAP_WIDTH and -1 < y and y < MAP_HEIGHT):
             return None
         if len((board.grid[x][y]).beings) > 0:
-            ((board.grid[x][y]).beings[-1]).hp -= self.abilityThreeDamage
+            ((board.grid[x][y]).beings[-1]).takeDamage(self, self.abilityThreeDamage)
             if self.abilityThreeStatus is not None:
                 ((board.grid[x][y]).beings[-1]).status.append(self.abilityThreeStatus)
-            if ((board.grid[x][y]).beings[-1]).hp <= 0:
-                ((board.grid[x][y]).beings[-1]).die()
             return self.abilityThreeMagic
         return None
 
@@ -51,11 +45,9 @@ class MagicalGirl(Being):
         if not (-1 < x and x < MAP_WIDTH and -1 < y and y < MAP_HEIGHT):
             return None
         if len((board.grid[x][y]).beings) > 0:
-            ((board.grid[x][y]).beings[-1]).hp -= self.abilityFourDamage
+            ((board.grid[x][y]).beings[-1]).takeDamage(self, self.abilityFourDamage)
             if self.abilityFourStatus is not None:
                 ((board.grid[x][y]).beings[-1]).status.append(self.abilityFourStatus)
-            if ((board.grid[x][y]).beings[-1]).hp <= 0:
-                ((board.grid[x][y]).beings[-1]).die()
             return self.abilityFourMagic
         return None
 

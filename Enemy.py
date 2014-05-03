@@ -10,6 +10,10 @@ board = Map.getInstance()
 
 def makeEnemy(being):
     class Enemy(being, Character):
+        def __init__(self):
+            super(Enemy, self).__init__()
+            self.target = None
+
         def takeTurn(self):
             # For now, just move in a random direction unless the player is nearby
             if self.immobilized():
@@ -22,53 +26,31 @@ def makeEnemy(being):
 
         def attack(self):
             # For now, attack anything above, then right, then below, then left
+            being = None
             if self.y > 0 and len((board.grid[self.x][self.y-1]).beings) > 0:
-                count = -1
-                for being in (board.grid[self.x][self.y-1]).beings:
-                    if ((board.grid[self.x][self.y-1]).beings[count]).__class__.__name__ == "Enemy":
-                        continue
-                    ((board.grid[self.x][self.y-1]).beings[count]).hp -= self.strength
-
-                    if ((board.grid[self.x][self.y-1]).beings[count]).hp <= 0:
-                        ((board.grid[self.x][self.y-1]).beings[count]).die()
+                being = (board.grid[self.x][self.y-1]).beings[-1]
+                if being is not None and being.__class__.__name__ != "Enemy":
+                    being.takeDamage(self, self.strength)
                     return True
 
-                # There is an enemy in that space, but no targets to attack
-                return False
-            elif self.x < (MAP_WIDTH - 1) and len((board.grid[self.x+1][self.y]).beings) > 0:
-                count = -1
-                for being in (board.grid[self.x+1][self.y]).beings:
-                    if ((board.grid[self.x+1][self.y]).beings[count]).__class__.__name__ == "Enemy":
-                        continue
-
-                    ((board.grid[self.x+1][self.y]).beings[count]).hp -= self.strength
-                    if ((board.grid[self.x+1][self.y]).beings[count]).hp <= 0:
-                        ((board.grid[self.x+1][self.y]).beings[count]).die()
+            if self.x < (MAP_WIDTH - 1) and len((board.grid[self.x+1][self.y]).beings) > 0:
+                being = (board.grid[self.x+1][self.y]).beings[-1]
+                if being is not None and being.__class__.__name__ != "Enemy":
+                    being.takeDamage(self, self.strength)
                     return True
 
-                return False
-            elif self.y < (MAP_HEIGHT - 1) and len((board.grid[self.x][self.y+1]).beings) > 0:
-                count = -1
-                for being in (board.grid[self.x][self.y+1]).beings:
-                    if ((board.grid[self.x][self.y+1]).beings[count]).__class__.__name__ == "Enemy":
-                        continue
-                    ((board.grid[self.x][self.y+1]).beings[count]).hp -= self.strength
-                    if ((board.grid[self.x][self.y+1]).beings[count]).hp <= 0:
-                        ((board.grid[self.x][self.y+1]).beings[count]).die()
+            if self.y < (MAP_HEIGHT - 1) and len((board.grid[self.x][self.y+1]).beings) > 0:
+                being = (board.grid[self.x][self.y+1]).beings[-1]
+                if being is not None and being.__class__.__name__ != "Enemy":
+                    being.takeDamage(self, self.strength)
                     return True
-                return False
-            elif self.x > 0 and len((board.grid[self.x-1][self.y]).beings) > 0:
-                count = -1
-                for being in (board.grid[self.x-1][self.y]).beings:
-                    if ((board.grid[self.x-1][self.y]).beings[count]).__class__.__name__ == "Enemy":
-                        continue
-                    ((board.grid[self.x-1][self.y]).beings[count]).hp -= self.strength
-                    if ((board.grid[self.x-1][self.y]).beings[count]).hp <= 0:
-                        ((board.grid[self.x-1][self.y]).beings[count]).die()
-                    return True
-                return False
 
-            # There are no other characters surrounding the enemy
+            if self.x > 0 and len((board.grid[self.x-1][self.y]).beings) > 0:
+                being = (board.grid[self.x-1][self.y]).beings[-1]
+                if being is not None and being.__class__.__name__ != "Enemy":
+                    being.takeDamage(self, self.strength)
+                    return True
+
             return False
 
         def die(self):
@@ -77,5 +59,11 @@ def makeEnemy(being):
                 board.removeBeing(self)
                 self.x = -1
                 self.y = -1
+
+        def takeDamage(self, attacker, damage):
+            self.hp -= damage
+            self.target = attacker
+            if self.hp <= 0:
+                self.die()
 
     return Enemy()

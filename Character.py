@@ -14,6 +14,12 @@ class Character:
             return True
         return False
 
+    def die(self):
+        if self.hp <= 0:
+            (board.grid[self.x][self.y]).removeBeing(self)
+            self.x = -1
+            self.y = -1
+
     def immobilized(self):
         for status in self.status:
             if status == Status.STUN:
@@ -51,6 +57,11 @@ class Character:
             return False
         return False
 
+    def takeDamage(self, attacker, damage):
+            self.hp -= damage
+            if self.hp <= 0:
+                self.die()
+
     def teleport(self, x, y):
         if x < 0 or x >= MAP_WIDTH or y < 0 or y >= MAP_HEIGHT:
             return False
@@ -61,9 +72,3 @@ class Character:
             self.y = y
             return True
         return False
-
-    def die(self):
-        if self.hp <= 0:
-            (board.grid[self.x][self.y]).removeBeing(self)
-            self.x = -1
-            self.y = -1
