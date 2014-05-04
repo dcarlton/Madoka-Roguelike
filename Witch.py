@@ -9,6 +9,8 @@ class Witch(Being):
         self.maxHP = 75
         self.hp = self.maxHP
         self.strength = 20
+        self.range = 1
+        self.vision = 3
         self.x = 0
         self.y = 0
         self.image = Images.getInstance().getImage(Sprites.WITCH_STANDING)

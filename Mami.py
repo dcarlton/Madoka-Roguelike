@@ -79,6 +79,9 @@ class Mami(MagicalGirl):
             self.untie()
             turnManager.removeDelayedFunction(self.untie, 10)
 
+    def endTurn(self, success):
+        return success
+
     def untie(self):
         if self.ribbonVictim is not None:
             self.ribbonVictim.status.remove(Status.STUN)

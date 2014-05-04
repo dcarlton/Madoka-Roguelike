@@ -12,6 +12,8 @@ class Familiar(Being):
         self.x = 0
         self.y = 0
         self.strength = 10
+        self.range = 1
+        self.vision = 3
         self.image = Images.getInstance().getImage(Sprites.FAMILIAR_STANDING)
         self.rect = self.image.get_rect()
         self.beingType = BeingType.FAMILIAR

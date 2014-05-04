@@ -12,6 +12,10 @@ class Walpurgisnacht(Being):
         super(Walpurgisnacht, self).__init__()
         self.hp = 150
         self.strength = 25
+        self.range = 1
+        self.vision = 3
+        self.x = 0
+        self.y = 0
         self.image = Images.getInstance().getImage(Sprites.WALPURGISNACHT_STANDING)
         self.rect = self.image.get_rect()
         self.beingType = BeingType.WALPURGISNACHT
