@@ -34,13 +34,13 @@ def makeEnemy(being):
                             continue
 
                         y = self.y - interval + abs(self.x - x)
-                        if y > 0 and y < MAP_HEIGHT and board.grid[x][y].beings:
+                        if y >= 0 and y < MAP_HEIGHT and board.grid[x][y].beings:
                             if board.grid[x][y].beings[-1].__class__.__name__ != "Enemy":
                                 self.target = board.grid[x][y].beings[-1]
                                 break
 
                         y = self.y + interval - abs(self.x - x)
-                        if y > 0 and y < MAP_HEIGHT and board.grid[x][y].beings:
+                        if y >= 0 and y < MAP_HEIGHT and board.grid[x][y].beings:
                             if board.grid[x][y].beings[-1].__class__.__name__ != "Enemy":
                                 self.target = board.grid[x][y].beings[-1]
                                 break

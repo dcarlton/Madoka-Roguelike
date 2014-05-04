@@ -33,6 +33,8 @@ class Graphics():
             for cell in column:
                 if len(cell.beings) != 0:
                     self.drawCharacter(cell.beings[-1])
+                if cell.barrier:
+                    self.screen.blit(Images.getInstance().getImage(Sprites.KYOKO_BARRIER), pygame.Rect(cell.x * 16, cell.y * 16, 16, 16))
 
         if isinstance(player, Homura):
             if player.timeStopped:

@@ -59,7 +59,9 @@ class Kyoko(MagicalGirl):
         self.abilityFourStatus = None
         self.abilityFourTargeted = True
         self.abilityFourTargets = Victims.EVERYTHING
+        self.barrierDuration = 5
 
+        self.barriers = []
         self.stunVictims = []
 
         turnManager.delayFunction(self.regenerate, self.regenerationRate)
@@ -84,7 +86,15 @@ class Kyoko(MagicalGirl):
         return magicLoss
 
     def abilityFour(self, x, y):
-        pass
+        if not board.grid[x][y].beings:
+            board.grid[x][y].barrier = True
+            turnManager.delayFunction(self.removeBarrier, self.barrierDuration)
+            self.barriers.append((x, y))
+
+            self.magic -= self.abilityFourMagic
+            if self.magic <= 0:
+                self.die()
+        return None
 
     def cureStun(self):
         victim = self.stunVictims.pop(0)
@@ -100,3 +110,7 @@ class Kyoko(MagicalGirl):
 
     def endTurn(self, success):
         return success
+
+    def removeBarrier(self):
+        barrier = self.barriers.pop(0)
+        board.grid[barrier[0]][barrier[1]].barrier = False

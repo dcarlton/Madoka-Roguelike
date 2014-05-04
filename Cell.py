@@ -3,6 +3,7 @@ from Enumerations import *
 
 class Cell:
     def __init__(self, x, y):
+        self.barrier = False
         self.beings = []
         self.block = BlockStatus.BLOCK_NONE
         self.x = x
@@ -28,7 +29,7 @@ class Cell:
 
     def canMove(self, being):
         # Temporary, should use the BlockStatus to determine if it can move there
-        if len(self.beings) == 0:
+        if len(self.beings) == 0 and self.barrier is False:
             return True
         return False
 
