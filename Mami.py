@@ -84,6 +84,9 @@ class Mami(MagicalGirl):
 
     def untie(self):
         if self.ribbonVictim is not None:
-            self.ribbonVictim.status.remove(Status.STUN)
+            try:
+                self.ribbonVictim.status.remove(Status.STUN)
+            except:
+                pass
             self.ribbonVictim = None
             self.abilityFourTargeted = True

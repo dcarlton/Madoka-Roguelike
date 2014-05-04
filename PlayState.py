@@ -6,6 +6,7 @@ from Event import Event
 from Familiar import Familiar
 from Graphics import Graphics
 from Homura import Homura
+from Kyoko import Kyoko
 from Mami import Mami
 from Map import Map
 from Mixer import Mixer
@@ -42,7 +43,7 @@ class PlayState(State):
             self.addFamiliar()
 
     def __init__(self):
-        self.player = makePlayer(Sayaka)
+        self.player = makePlayer(Kyoko)
         board.addCharacter(self.player)
 
         self.familiars = []
