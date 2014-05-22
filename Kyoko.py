@@ -14,17 +14,11 @@ turnManager = TurnManager.getInstance()
 class Kyoko(MagicalGirl):
     def __init__(self):
         super(Kyoko, self).__init__()
-        self.maxHP = 100
-        self.hp = 100
-        self.magic = 100
-        self.x = 0
-        self.y = 0
-        self.regenerationRate = 5
-        self.block = BlockStatus.BLOCK_ALL
         self.image = Images.getInstance().getImage(Sprites.KYOKO_STANDING)
         self.rect = self.image.get_rect()
-        self.beingType = BeingType.MAGICAL_GIRL
-        self.score = 0
+
+        self.barriers = []
+        self.stunVictims = []
 
         self.abilityOneName = "Spear Thrust"
         self.abilityOneDamage = 15
@@ -60,9 +54,6 @@ class Kyoko(MagicalGirl):
         self.abilityFourTargeted = True
         self.abilityFourTargets = Victims.EVERYTHING
         self.barrierDuration = 5
-
-        self.barriers = []
-        self.stunVictims = []
 
         turnManager.delayFunction(self.regenerate, self.regenerationRate)
 

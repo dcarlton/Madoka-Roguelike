@@ -9,15 +9,15 @@ class Familiar(Being):
         super(Familiar, self).__init__()
         self.maxHP = 25
         self.hp = self.maxHP
-        self.x = 0
-        self.y = 0
-        self.strength = 10
-        self.range = 1
-        self.vision = 3
+
         self.image = Images.getInstance().getImage(Sprites.FAMILIAR_STANDING)
         self.rect = self.image.get_rect()
+
         self.beingType = BeingType.FAMILIAR
         self.block = BlockStatus.BLOCK_ALL
+        self.range = 1
+        self.strength = 10
+        self.vision = 3
 
     def die(self):
         if self.hp <= 0:

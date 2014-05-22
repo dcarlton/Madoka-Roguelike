@@ -20,6 +20,7 @@ def makePlayer(being):
     class Player(being, Character):
         def __init__(self):
             being.__init__(self)
+            self.score = 0
 
             # Ugh, poor naming...can be equal to ABILITY_ONE, ABILITY_TWO, etc. or None if not targeting
             self.targeting = None

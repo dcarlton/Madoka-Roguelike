@@ -1,6 +1,6 @@
 from Being import Being
 from Constants import *
-from Enumerations import BeingType
+from Enumerations import BeingType, Victims
 from Map import Map
 from TurnManager import TurnManager
 
@@ -10,6 +10,40 @@ turnManager = TurnManager.getInstance()
 class MagicalGirl(Being):
     def __init__(self):
         super(MagicalGirl, self).__init__()
+        self.magic = 100
+        self.regenerationRate = 5
+
+        self.abilityOneName = ""
+        self.abilityOneDamage = 0
+        self.abilityOneMagic = 0
+        self.abilityOneRange = 0
+        self.abilityOneStatus = None
+        self.abilityOneTargeted = False
+        self.abilityOneTargets = Victims.NONE
+
+        self.abilityTwoName = ""
+        self.abilityTwoDamage = 0
+        self.abilityTwoMagic = 0
+        self.abilityTwoRange = 0
+        self.abilityTwoStatus = None
+        self.abilityTwoTargeted = False
+        self.abilityTwoTargets = Victims.NONE
+
+        self.abilityThreeName = ""
+        self.abilityThreeDamage = 0
+        self.abilityThreeMagic = 0
+        self.abilityThreeRange = 0
+        self.abilityThreeStatus = None
+        self.abilityThreeTargeted = False
+        self.abilityThreeTargets = Victims.NONE
+
+        self.abilityFourName = ""
+        self.abilityFourDamage = 0
+        self.abilityFourMagic = 0
+        self.abilityFourRange = 0
+        self.abilityFourStatus = None
+        self.abilityFourTargeted = False
+        self.abilityFourTargets = Victims.NONE
 
     def abilityOne(self, x, y):
         if not (-1 < x and x < MAP_WIDTH and -1 < y and y < MAP_HEIGHT):
